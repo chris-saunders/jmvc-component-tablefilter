@@ -1,0 +1,28 @@
+QUNIT
+=====
+
+ok - checks truthy
+equal - checks with ==
+strictEqual - checks with ===
+deepEqual - checks with === and can compare objects
+
+expect( int ) - can be used to state how many assertions should run in the test and is specifically for use with callbacks and synchronous code
+alternative way...
+test("testThisHappens", 2, function() {})
+
+async tests need a different test function name and need the "start" method to tell the test runner to resume...
+
+asyncTest("do something async", 1, function() {
+	setTimeout(function() {
+		expect(timer, 2000, "After two seconds")
+		start()
+	});
+})
+
+trigger() and triggerHandler() can be used to simulate user interaction. triggerHandler() prevents native browser events from being triggered and just triggers bound event handlers.
+
+?noglobals flag checks for additions to global namespace after each test has run. qunit cleans the fixture element between tests.
+
+module() to section tests - also takes two parameters `setup` and `teardown` which run before each test inside that module
+
+use when() and deferreds with tests for async stuff *** this might not work as expected with the test runner

@@ -1,11 +1,15 @@
 steal(
-	'./tablefilter.css', 			// application CSS file
-	'./models/models.js',		// steals all your models
-	'./fixtures/fixtures.js',	// sets up fixtures for your models
-	'jquery/controller',
-	'jquery/controller/view',
+    'jquery/controller',
+    'jquery/controller/view',
+    '//jquery/view/ejs/ejs',
+    './controllers/controllers.js',
+	'./models/models.js',
+	'./fixtures/fixtures.js',
+    './tablefilter.css'
+).then(
+    '//public/js/libs/jqueryui/latest.js',
 
-	function(){					// configure your application
+	function(){
 		$.Controller('Tablefilter',
 		{
 

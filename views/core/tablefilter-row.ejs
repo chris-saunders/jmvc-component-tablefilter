@@ -1,0 +1,5 @@
+<tr class="filter-row">
+    <% for(i = 0; i < columnCount; i++) { %>
+        <td class="<%= filters[i] ? filters[i].name : '' %>"></td>
+    <% } %>
+</tr>

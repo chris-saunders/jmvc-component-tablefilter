@@ -1,128 +1,125 @@
 steal(
-	'funcunit/qunit',
-	'jquery/model',
-	'jquery/controller',
-    'jquery/controller/view',
-	'jquery/view/ejs',
-	'jquery/dom/fixture',
-	'../../tablefilter.js'
+    '../../tablefilter.js'
 ).then(
-	function() {
-		var $fixture = null,
-			$table = null,
-			repeat_field = {
-				setup: function() {
-					$fixture = $('#qunit-fixture');
-                    $fixture.append($.View('//frogui/components/tablefilter/test/qunit/views/field_test.ejs'));
-				},
-                teardown: function() {
-					$fixture = $table = null;
-				}
-            },
-            repeat_instantiation = {
+    function() {
+        var $fixture = null,
+            $table = null,
+            repeat = {
                 setup: function() {
                     $fixture = $('#qunit-fixture');
-                    $fixture.append($.View('//frogui/components/tablefilter/test/qunit/views/instantiation_test.ejs'));
+                    $fixture.append($.View('//frogui/components/tablefilter/test/qunit/views/field_test.ejs'));
                 },
                 teardown: function() {
                     $fixture = $table = null;
                 }
             };
-
-        module('text field', repeat_field);
-
+            
+        module('text fields', repeat);
         test('can be instantiated', function() {
             ok($fixture.frogui_components_tablefilter_field_text());
         });
 
         test('text input is created in DOM', function() {
-            var $el = $fixture.find('.name');
-            $el.frogui_components_tablefilter_field_text();
-            equals($el.find('input[type="text"]').length, 1);
+            equals($fixture.find('.name').frogui_components_tablefilter_field_text().find('input[type="text"]').length, 1);
         });
 
-        module('select field', repeat_field);
+        test('text field is populated by given data', function() {
+            $td = $fixture.find('.name');
+            $td.frogui_components_tablefilter_field_text({
+                data: ["chris"]
+            });
+            equals($td.find('input').val(), '');
+        });
 
+        module('select field', repeat);
         test('can be instantiated', function() {
             ok($fixture.frogui_components_tablefilter_field_select());
         });
 
         test('select field is created in DOM', function() {
-            var $el = $fixture.find('.city');
-            $el.frogui_components_tablefilter_field_select();
-            equals($el.find('select').length, 1);
+            equals($fixture.find('.city').frogui_components_tablefilter_field_select().find('select').length, 1);
         });
 
-		module('date field', repeat_field);
+        test('select field is populated by given data', function() {
+            $td = $fixture.find('.city');
+            $td.frogui_components_tablefilter_field_select({
+                data: ["wakefield"]
+            });
+            equals($td.find('option[name=wakefield]').val(), 'wakefield');
+        });
 
-		test('can be instantiated', function() {
-			ok($fixture.frogui_components_tablefilter_field_date());
-		});
+        module('date field', repeat);
+        test('can be instantiated', function() {
+            ok($fixture.frogui_components_tablefilter_field_date());
+        });
 
         test('jQuery UI datepicker is created in DOM', function() {
-            var $el = $fixture.find('.dob');
-            $el.frogui_components_tablefilter_field_date();
-            ok($fixture.find('.ui-datepicker'));
+            ok($fixture.find('.dob').frogui_components_tablefilter_field_date().find('.ui-datepicker'));
         });
 
         test('jQuery UI datepicker is associated to input', function() {
-            var $el = $fixture.find('.dob');
-            $el.frogui_components_tablefilter_field_date();
+            var $el = $fixture.find('.dob').frogui_components_tablefilter_field_date();
             equals($el.find('input').length, 1);
             ok($el.find('input').hasClass('hasDatepicker'));
         });
 
-        module('instantiation', repeat_instantiation);
+        module('failing component instantiation');
+        test('component requires atleast one column to be filtered', function() {
+            $fixture = $('#qunit-fixture');
+            $fixture.append($.View('//frogui/components/tablefilter/test/qunit/views/blank_table_test.ejs'));
+            $table = $fixture.find('table');
 
+            raises(
+                function() {
+                    $table.frogui_components_tablefilter();
+                },
+                function(err) {
+                    return err.message === 'You must provide atleast one filter.';
+                }
+            );
+        });
+
+        repeat = {
+            setup: function() {
+                $fixture = $('#qunit-fixture');
+                $fixture.append($.View('//frogui/components/tablefilter/test/qunit/views/blank_table_test.ejs'));
+                $table = $fixture.find('table');
+                $table.frogui_components_tablefilter({
+                    filters: {
+                        name: {
+                            type: "text",
+                            data: ["Chris", "Dave", "Jill"]
+                        },
+                        dob: {
+                            type: "date"
+                        },
+                        city: {
+                            type: "select",
+                            data: ["manchester", "wakefield", "leeds"]
+                        }
+                    }
+                });
+            },
+            teardown: function() {
+                $fixture = $table = null;
+            }
+        };
+
+        module('component instantiation', repeat)
         test('component can be instantiated on a table', function() {
-            var $table = $fixture.find('table');
-            $table.frogui_components_tablefilter();
             ok($table.hasClass('frogui_components_tablefilter'));
         });
 
         test('appends filter row to thead', function() {
-            var $table = $fixture.find('table');
-            $table.frogui_components_tablefilter();
             equals($table.find('thead tr.filter-row').length, 1);
         });
 
-        test('filter row has correct column count', function() {
-            var $table = $fixture.find('table'),
-                columnCount = $table.find('thead tr:first th').length;
-            $table.frogui_components_tablefilter();
-            equals($table.find('thead tr.filter-row td').length, columnCount);
+        test("instantiates a component on corresponding column", function() {
+            // test = $table;
+            // debugger;
+            ok($table.find('.filter-row td.city').hasClass('frogui_components_tablefilter_field_select'));
+            ok($table.find('.filter-row td.name').hasClass('frogui_components_tablefilter_field_text'));
+            ok($table.find('.filter-row td.dob').hasClass('frogui_components_tablefilter_field_date'));
         });
-
-        test('filter names are inserted as classes on correct columns', function() {
-            var $table = $fixture.find('table'),
-                params = {
-                    'filters': {
-                        0: {'name': 'name'},
-                        1: {'name': 'dob'},
-                        2: {'name': 'city'}
-                    }
-                };
-            $table.frogui_components_tablefilter(params);
-            var filters = $table.find('thead tr.filter-row td');
-            ok($(filters[0]).hasClass('name'));
-            ok($(filters[1]).hasClass('dob'));
-            ok($(filters[2]).hasClass('city'));
-        });
-
-        test('filter components are rendered into correct columns', function() {
-            var $table = $fixture.find('table'),
-                params = {
-                    filters: {
-                        0: {'name': 'name', 'component': Frogui.Controllers.Components.Tablefilter.Field.Text},
-                        1: {'name': 'dob'},
-                        2: {'name': 'city', 'component': Frogui.Controllers.Components.Tablefilter.Field.Select}
-                    }
-                };
-            $table.frogui_components_tablefilter(params);
-            var $filters = $table.find('thead tr.filter-row');
-            ok($filters.find('.name').hasClass('frogui_components_tablefilter_field_text')); // name has text component
-			ok($filters.find('.dob').attr('class') === 'dob'); // DOB has no component
-			ok($filters.find('.city').hasClass('frogui_components_tablefilter_field_select')); // city has select component
-        });
-	}
+    }
 )

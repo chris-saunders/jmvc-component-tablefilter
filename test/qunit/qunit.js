@@ -1,5 +1,4 @@
-steal("jquery")
-.then(
-	"funcunit/qunit", 
-	"./tablefilter_controller.js"
+steal(
+    "funcunit/qunit", 
+    "./tablefilter_controller.js"
 );

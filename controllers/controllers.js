@@ -1,7 +1,10 @@
 steal(
-    '//lib/frog_controller.js'
+    'lib/frog_controller.js',
+    'jquery/controller',
+    'jquery/controller/view',
+    'jquery/view/ejs'
+).then(
+    './field_controller.js'
 ).then(
     './core_controller.js'
-).then(
-	'./field_controller.js'
 );

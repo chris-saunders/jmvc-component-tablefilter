@@ -53,7 +53,7 @@ The component takes an object literal as its only parameter.
         }
     } 
     Type: Object
-NB: 'text' filters use Bootstrap Typeahead
+NB: 'text' filters use [Bootstrap Typeahead](http://twitter.github.io/bootstrap/javascript.html#typeahead)
 ### Optional
 #### filters.arbitraryIdentified.placeholder
     Type: String

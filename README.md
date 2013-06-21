@@ -59,6 +59,14 @@ NB: 'text' filters use Bootstrap Typeahead
     Type: String
 A string used for the placeholder on specified field.
 
+## Events
+###  Emitted
+- 'tablefilter.submit' - provides scraped filter data as an object keyed by arbitrary identifiers provided.
+- 'tablefilter.reset'.
+
+### Listeners
+- 'tablefilter.toggleVisibility' - shows/hides component.
+
 ## Additional Info
 - This component is test driven. If you make any modifications to this component please test drive carefully!
 

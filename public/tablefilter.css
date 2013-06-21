@@ -1,0 +1,3 @@
+.filter-row{background-color:#ddd;}.filter-row input,.filter-row select{display:block;margin:auto;width:90%;}
+.filter-submit-row{background-color:#ddd;}.filter-submit-row td.last{float:right;}
+.filter-icon{background:url("../../../../public/icon/UI/icons.png") no-repeat -328px -107px;height:18px;width:16px;}

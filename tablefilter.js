@@ -3,9 +3,9 @@ steal(
     './fixtures/fixtures.js'
 ).then(
     './controllers/controllers.js',
-    './tablefilter.css'
+    './public/css.js'
 ).then(
     'public/js/libs/jqueryui/latest.js'
 ).then(
     'public/js/libs/bootstrap/bootstrap.js'
-)
+);

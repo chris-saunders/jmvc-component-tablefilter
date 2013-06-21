@@ -36,26 +36,28 @@ Frog.Controller.extend('Frogui.Controllers.Components.Tablefilter', {
         for (var filter in filters) {
             if (filters.hasOwnProperty(filter)) {
                 switch(filters[filter].type) {
-                    case 'select':
-                        $cell = $($filterRow.find('td').get(i));
-                        $cell.attr('label', filter);
-                        $cell.frogui_components_tablefilter_field_select({
-                            label: filter,
-                            data: filters[filter].data
-                        });
-                    break;
                     case 'text':
                         $cell = $($filterRow.find('td').get(i));
                         $cell.attr('label', filter);
                         $cell.frogui_components_tablefilter_field_text({
                             label: filter,
-                            data: filters[filter].data
+                            data: filters[filter].data,
+                            placeholder: filters[filter].placeholder || 'Enter ' + filter
                         });
                     break;
                     case 'date':
                         $cell = $($filterRow.find('td').get(i));
                         $cell.attr('label', filter);
                         $cell.frogui_components_tablefilter_field_date({
+                            label: filter,
+                            data: filters[filter].data,
+                            placeholder: filters[filter].placeholder || 'Enter ' + filter
+                        });
+                    break;
+                    case 'select':
+                        $cell = $($filterRow.find('td').get(i));
+                        $cell.attr('label', filter);
+                        $cell.frogui_components_tablefilter_field_select({
                             label: filter,
                             data: filters[filter].data
                         });

@@ -23,14 +23,6 @@ steal(
             equal($fixture.find('.name').frogui_components_tablefilter_field_text().find('input[type="text"]').length, 1);
         });
 
-        test('text field is populated by given data', function() {
-            $td = $fixture.find('.name');
-            $td.frogui_components_tablefilter_field_text({
-                data: ["chris"]
-            });
-            equal($td.find('input').val(), '');
-        });
-
         module('select field', repeat);
         test('can be instantiated', function() {
             ok($fixture.frogui_components_tablefilter_field_select());
@@ -92,7 +84,8 @@ steal(
                             data: ["Chris", "Dave", "Jill"]
                         },
                         dob: {
-                            type: "date"
+                            type: "date",
+                            placeholder: 'Enter Date of Birth'
                         },
                         city: {
                             type: "select",
@@ -109,6 +102,11 @@ steal(
         module('component instantiation', repeat)
         test('component can be instantiated on a table', function() {
             ok($table.hasClass('frogui_components_tablefilter'));
+        });
+
+        test('placeholders can be defaulted and overriden', function() {
+            equal($table.find('.name input').attr('placeholder'), 'Enter name');
+            equal($table.find('.dob input').attr('placeholder'), 'Enter Date of Birth');
         });
 
         test('appends filter row to thead', function() {

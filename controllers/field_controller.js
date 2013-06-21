@@ -1,7 +1,8 @@
 Frog.Controller.extend('Frogui.Controllers.Components.Tablefilter.Field',
 {
     defaults: {
-        data: []
+        data: [],
+        placeholder: ''
     }
 
 }, {
@@ -19,7 +20,7 @@ Frogui.Controllers.Components.Tablefilter.Field.extend('Frogui.Controllers.Compo
 
 }, {
     render: function() {
-        this.element.html(this.view('//frogui/components/tablefilter/views/fields/text.ejs'));
+        this.element.html(this.view('//frogui/components/tablefilter/views/fields/text.ejs', this.options));
         this.find('input').typeahead({
             source: this.options.data
         });
@@ -32,7 +33,7 @@ Frogui.Controllers.Components.Tablefilter.Field.extend('Frogui.Controllers.Compo
 
 }, {
     render: function() {
-        this.element.html(this.view('//frogui/components/tablefilter/views/fields/date.ejs'));
+        this.element.html(this.view('//frogui/components/tablefilter/views/fields/date.ejs', this.options));
         this.element.find('input').datepicker();
         this._super();
     }

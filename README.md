@@ -55,7 +55,7 @@ The component takes an object literal as its only parameter.
     Type: Object
 NB: 'text' filters use [Bootstrap Typeahead](http://twitter.github.io/bootstrap/javascript.html#typeahead)
 ### Optional
-#### filters.arbitraryIdentified.placeholder
+#### filters.arbitraryIdentified.placeholder (default: 'Enter `arbitraryIdentifier`')
     Type: String
 A string used for the placeholder on specified field.
 

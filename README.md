@@ -13,14 +13,17 @@ Appends a row to an existing table to facilitate filtering table content. An eve
         filters: {
             name: {
                 type: "text",
-                data: ["Chris", "Bob", "Janet"]
+                data: ["Chris", "Bob", "Janet"],
+                position: 0
             },
             dob: {
-                type: "date"
+                type: "date",
+                position: 1
             },
             city: {
                 type: "select",
-                data: ["Wakefield", "Dewsbury", "Batley"]
+                data: ["Wakefield", "Dewsbury", "Batley"],
+                position: 2
             }
         }
     });
@@ -49,7 +52,8 @@ The component takes an object literal as its only parameter.
     filters: {
         arbitraryIdentifier: {
             type: 'text' || 'date' || 'select',
-            data: [] // only required for 'text' or 'select'
+            data: [] // only required for 'text' or 'select',
+            position: integer (zero-indexed)
         }
     } 
     Type: Object

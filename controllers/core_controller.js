@@ -9,7 +9,6 @@ Frog.Controller.extend('Frogui.Controllers.Components.Tablefilter', {
     },
 
     optionValidation: function() {
-        // Option validation
         if ($.isEmptyObject(this.options.filters)) {
             throw new Error('You must provide atleast one filter.');
         }
@@ -31,13 +30,18 @@ Frog.Controller.extend('Frogui.Controllers.Components.Tablefilter', {
             }
         });
 
-        var i = 0, $cell;
+        var $cell, position;
 
         for (var filter in filters) {
             if (filters.hasOwnProperty(filter)) {
+                position = filters[filter].position;
+                if (typeof(position) === 'undefined') {
+                    throw new Error('You must provide `position` for each filter.');
+                }
+
                 switch(filters[filter].type) {
                     case 'text':
-                        $cell = $($filterRow.find('td').get(i));
+                        $cell = $($filterRow.find('td').get(position));
                         $cell.attr('label', filter);
                         $cell.frogui_components_tablefilter_field_text({
                             label: filter,
@@ -46,7 +50,7 @@ Frog.Controller.extend('Frogui.Controllers.Components.Tablefilter', {
                         });
                     break;
                     case 'date':
-                        $cell = $($filterRow.find('td').get(i));
+                        $cell = $($filterRow.find('td').get(position));
                         $cell.attr('label', filter);
                         $cell.frogui_components_tablefilter_field_date({
                             label: filter,
@@ -55,7 +59,7 @@ Frog.Controller.extend('Frogui.Controllers.Components.Tablefilter', {
                         });
                     break;
                     case 'select':
-                        $cell = $($filterRow.find('td').get(i));
+                        $cell = $($filterRow.find('td').get(position));
                         $cell.attr('label', filter);
                         $cell.frogui_components_tablefilter_field_select({
                             label: filter,
@@ -63,16 +67,16 @@ Frog.Controller.extend('Frogui.Controllers.Components.Tablefilter', {
                         });
                     break;
                 }
-                i++;
             }
         }
     },
 
     update: function(options) {
-        this._super(options);
-        this.element.find('.filter-row').remove();
-        this.optionValidation();
-        this.render();
+        // return false;
+        // this._super(options);
+        // this.element.find('.filter-row, .filter-submit-row').remove();
+        // this.optionValidation();
+        // this.render();
     },
 
     'tablefilter.toggleVisibility': function(el, ev) {
@@ -91,10 +95,15 @@ Frog.Controller.extend('Frogui.Controllers.Components.Tablefilter', {
 
     'button.filter-submit {click}': function(el, ev) {
         var $filters = this.element.find('tr.filter-row td'),
-            filterData = {};
+            filterData = {},
+            filterVal;
 
         $filters.each(function(index, el) {
-            filterData[$(this).attr('label')] = $(el).children().val();
+            filterVal = $(el).children().val();
+            // Don't include blank filters in filterData
+            if (filterVal) {
+                filterData[$(this).attr('label')] = filterVal;
+            }
         });
 
         this.element.trigger('tablefilter.submit', filterData);

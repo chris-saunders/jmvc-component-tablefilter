@@ -56,7 +56,7 @@ steal(
             ok($el.find('input').hasClass('hasDatepicker'));
         });
 
-        module('failing component instantiation');
+        module('component parameter validation');
         test('component requires atleast one column to be filtered', function() {
             $fixture = $('#qunit-fixture');
             $fixture.append($.View('//frogui/components/tablefilter/test/qunit/views/blank_table_test.ejs'));
@@ -72,6 +72,28 @@ steal(
             );
         });
 
+        test('component throws error if a filter is provided without a position declared', function() {
+            $fixture = $('#qunit-fixture');
+            $fixture.append($.View('//frogui/components/tablefilter/test/qunit/views/blank_table_test.ejs'));
+            $table = $fixture.find('table');
+
+            raises(
+                function() {
+                    $table.frogui_components_tablefilter({
+                        filters: {
+                            name: {
+                                type: "text",
+                                data: ["Chris", "Dave", "Jill"]
+                            }
+                        }
+                    });
+                },
+                function(err) {
+                    return err.message === 'You must provide `position` for each filter.';
+                }
+            );
+        });
+
         repeat = {
             setup: function() {
                 $fixture = $('#qunit-fixture');
@@ -81,15 +103,18 @@ steal(
                     filters: {
                         name: {
                             type: "text",
-                            data: ["Chris", "Dave", "Jill"]
+                            data: ["Chris", "Dave", "Jill"],
+                            position: 0
                         },
                         dob: {
                             type: "date",
-                            placeholder: 'Enter Date of Birth'
+                            placeholder: 'Enter Date of Birth',
+                            position: 1
                         },
                         city: {
                             type: "select",
-                            data: ["manchester", "wakefield", "leeds"]
+                            data: ["manchester", "wakefield", "leeds"],
+                            position: 2
                         }
                     }
                 });
@@ -118,11 +143,11 @@ steal(
         });
 
         test('instantiates a component on corresponding column', function() {
-            var $filterRow = $table.find('tr.filter-row');
+            var $filterRowTds = $table.find('tr.filter-row').children();
 
-            ok($filterRow.children('.city').hasClass('frogui_components_tablefilter_field_select'));
-            ok($filterRow.children('.name').hasClass('frogui_components_tablefilter_field_text'));
-            ok($filterRow.children('.dob').hasClass('frogui_components_tablefilter_field_date'));
+            ok($filterRowTds.eq(0).hasClass('frogui_components_tablefilter_field_text'));
+            ok($filterRowTds.eq(1).hasClass('frogui_components_tablefilter_field_date'));
+            ok($filterRowTds.eq(2).hasClass('frogui_components_tablefilter_field_select'));
         });
 
         test('reset button clears filter values', function() {
@@ -142,7 +167,7 @@ steal(
         test('filter button emits form data', 1, function() {
             var $filters = $table.find('tr.filter-row td'),
                 expectedData = {
-                    name: "Chris",
+                    
                     dob: "06/01/2013",
                     city: "wakefield"
                 };
@@ -151,7 +176,7 @@ steal(
                 deepEqual(data, expectedData);
             });
 
-            $filters.children('.name input').val('Chris');
+            // $filters.children('.name input').val('Chris');
             $filters.children('.dob input').val('06/01/2013');
             $filters.children('.city select').val('wakefield');
 

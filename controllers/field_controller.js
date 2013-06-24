@@ -34,7 +34,7 @@ Frogui.Controllers.Components.Tablefilter.Field.extend('Frogui.Controllers.Compo
 }, {
     render: function() {
         this.element.html(this.view('//frogui/components/tablefilter/views/fields/date.ejs', this.options));
-        this.element.find('input').datepicker();
+        this.element.find('input').datepicker({ dateFormat: 'dd/mm/yy' })
         this._super();
     }
 });

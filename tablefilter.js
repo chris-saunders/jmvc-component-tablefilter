@@ -1,12 +1,6 @@
 steal(
-	'public/js/libs/bootstrap/css/bootstrap.css',
     './models/models.js',
-    './fixtures/fixtures.js'
-).then(
+    './fixtures/fixtures.js',
     './controllers/controllers.js',
     './public/css.js'
-).then(
-    'public/js/libs/jqueryui/ui/latest.js'
-).then(
-    'public/js/libs/bootstrap/js/bootstrap.js'
 );

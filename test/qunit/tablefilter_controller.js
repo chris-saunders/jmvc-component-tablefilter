@@ -7,7 +7,7 @@ steal(
             repeat = {
                 setup: function() {
                     $fixture = $('#qunit-fixture');
-                    $fixture.append($.View('//frogui/components/tablefilter/test/qunit/views/field_test.ejs'));
+                    $fixture.append($.View('//components/tablefilter/test/qunit/views/field_test.ejs'));
                 },
                 teardown: function() {
                     $fixture = $table = null;
@@ -16,25 +16,25 @@ steal(
 
         module('text fields', repeat);
         test('can be instantiated', function() {
-            ok($fixture.frogui_components_tablefilter_field_text());
+            ok($fixture.components_tablefilter_field_text());
         });
 
         test('text input is created in DOM', function() {
-            equal($fixture.find('.name').frogui_components_tablefilter_field_text().find('input[type="text"]').length, 1);
+            equal($fixture.find('.name').components_tablefilter_field_text().find('input[type="text"]').length, 1);
         });
 
         module('select field', repeat);
         test('can be instantiated', function() {
-            ok($fixture.frogui_components_tablefilter_field_select());
+            ok($fixture.components_tablefilter_field_select());
         });
 
         test('select field is created in DOM', function() {
-            equal($fixture.find('.city').frogui_components_tablefilter_field_select().find('select').length, 1);
+            equal($fixture.find('.city').components_tablefilter_field_select().find('select').length, 1);
         });
 
         test('select field is populated by given data', function() {
             $td = $fixture.find('.city');
-            $td.frogui_components_tablefilter_field_select({
+            $td.components_tablefilter_field_select({
                 data: ["wakefield"]
             });
             equal($td.find('option[name=wakefield]').val(), 'wakefield');
@@ -42,15 +42,15 @@ steal(
 
         module('date field', repeat);
         test('can be instantiated', function() {
-            ok($fixture.frogui_components_tablefilter_field_date());
+            ok($fixture.components_tablefilter_field_date());
         });
 
         test('jQuery UI datepicker is created in DOM', function() {
-            ok($fixture.find('.dob').frogui_components_tablefilter_field_date().find('.ui-datepicker'));
+            ok($fixture.find('.dob').components_tablefilter_field_date().find('.ui-datepicker'));
         });
 
         test('jQuery UI datepicker is associated to input', function() {
-            var $el = $fixture.find('.dob').frogui_components_tablefilter_field_date();
+            var $el = $fixture.find('.dob').components_tablefilter_field_date();
 
             equal($el.find('input').length, 1);
             ok($el.find('input').hasClass('hasDatepicker'));
@@ -59,12 +59,12 @@ steal(
         module('component parameter validation');
         test('component requires atleast one column to be filtered', function() {
             $fixture = $('#qunit-fixture');
-            $fixture.append($.View('//frogui/components/tablefilter/test/qunit/views/blank_table_test.ejs'));
+            $fixture.append($.View('//components/tablefilter/test/qunit/views/blank_table_test.ejs'));
             $table = $fixture.find('table');
 
             raises(
                 function() {
-                    $table.frogui_components_tablefilter();
+                    $table.components_tablefilter();
                 },
                 function(err) {
                     return err.message === 'You must provide atleast one filter.';
@@ -74,12 +74,12 @@ steal(
 
         test('component throws error if a filter is provided without a position declared', function() {
             $fixture = $('#qunit-fixture');
-            $fixture.append($.View('//frogui/components/tablefilter/test/qunit/views/blank_table_test.ejs'));
+            $fixture.append($.View('//components/tablefilter/test/qunit/views/blank_table_test.ejs'));
             $table = $fixture.find('table');
 
             raises(
                 function() {
-                    $table.frogui_components_tablefilter({
+                    $table.components_tablefilter({
                         filters: {
                             name: {
                                 type: "text",
@@ -97,9 +97,9 @@ steal(
         repeat = {
             setup: function() {
                 $fixture = $('#qunit-fixture');
-                $fixture.append($.View('//frogui/components/tablefilter/test/qunit/views/blank_table_test.ejs'));
+                $fixture.append($.View('//components/tablefilter/test/qunit/views/blank_table_test.ejs'));
                 $table = $fixture.find('table');
-                $table.frogui_components_tablefilter({
+                $table.components_tablefilter({
                     filters: {
                         name: {
                             type: "text",
@@ -124,9 +124,9 @@ steal(
             }
         };
 
-        module('component instantiation', repeat)
+        module('component instantiation', repeat);
         test('component can be instantiated on a table', function() {
-            ok($table.hasClass('frogui_components_tablefilter'));
+            ok($table.hasClass('components_tablefilter'));
         });
 
         test('placeholders can be defaulted and overriden', function() {
@@ -145,9 +145,9 @@ steal(
         test('instantiates a component on corresponding column', function() {
             var $filterRowTds = $table.find('tr.filter-row').children();
 
-            ok($filterRowTds.eq(0).hasClass('frogui_components_tablefilter_field_text'));
-            ok($filterRowTds.eq(1).hasClass('frogui_components_tablefilter_field_date'));
-            ok($filterRowTds.eq(2).hasClass('frogui_components_tablefilter_field_select'));
+            ok($filterRowTds.eq(0).hasClass('components_tablefilter_field_text'));
+            ok($filterRowTds.eq(1).hasClass('components_tablefilter_field_date'));
+            ok($filterRowTds.eq(2).hasClass('components_tablefilter_field_select'));
         });
 
         test('reset button clears filter values', function() {
@@ -197,4 +197,4 @@ steal(
             ok($table.find('.filter-row').hasClass('hide'));
         });
     }
-)
+);

@@ -1,4 +1,4 @@
-Frog.Controller.extend('Frogui.Controllers.Components.Tablefilter.Field',
+$.Controller.extend('Components.Tablefilter.Field',
 {
     defaults: {
         data: [],
@@ -15,12 +15,12 @@ Frog.Controller.extend('Frogui.Controllers.Components.Tablefilter.Field',
     }
 });
 
-Frogui.Controllers.Components.Tablefilter.Field.extend('Frogui.Controllers.Components.Tablefilter.Field.Text',
+Components.Tablefilter.Field.extend('Components.Tablefilter.Field.Text',
 {
 
 }, {
     render: function() {
-        this.element.html(this.view('//frogui/components/tablefilter/views/fields/text.ejs', this.options));
+        this.element.html(this.view('//components/tablefilter/views/fields/text.ejs', this.options));
         this.find('input').typeahead({
             source: this.options.data
         });
@@ -28,23 +28,23 @@ Frogui.Controllers.Components.Tablefilter.Field.extend('Frogui.Controllers.Compo
     }
 });
 
-Frogui.Controllers.Components.Tablefilter.Field.extend('Frogui.Controllers.Components.Tablefilter.Field.Date',
+Components.Tablefilter.Field.extend('Components.Tablefilter.Field.Date',
 {
 
 }, {
     render: function() {
-        this.element.html(this.view('//frogui/components/tablefilter/views/fields/date.ejs', this.options));
-        this.element.find('input').datepicker({ dateFormat: 'dd/mm/yy' })
+        this.element.html(this.view('//components/tablefilter/views/fields/date.ejs', this.options));
+        this.element.find('input').datepicker({ dateFormat: 'dd/mm/yy' });
         this._super();
     }
 });
 
-Frogui.Controllers.Components.Tablefilter.Field.extend('Frogui.Controllers.Components.Tablefilter.Field.Select',
+Components.Tablefilter.Field.extend('Components.Tablefilter.Field.Select',
 {
 
 }, {
     render: function() {
-        this.element.html(this.view('//frogui/components/tablefilter/views/fields/select.ejs', this.options));
+        this.element.html(this.view('//components/tablefilter/views/fields/select.ejs', this.options));
         this._super();
     }
 });

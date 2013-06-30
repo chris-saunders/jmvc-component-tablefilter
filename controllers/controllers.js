@@ -1,5 +1,4 @@
 steal(
-    'lib/frog_controller.js',
     'jquery/controller',
     'jquery/controller/view',
     'jquery/view/ejs'

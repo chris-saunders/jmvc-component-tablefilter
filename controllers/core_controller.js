@@ -1,4 +1,4 @@
-Frog.Controller.extend('Frogui.Controllers.Components.Tablefilter', {
+$.Controller.extend('Components.Tablefilter', {
     defaults: {
         filters: {}
     }
@@ -18,7 +18,7 @@ Frog.Controller.extend('Frogui.Controllers.Components.Tablefilter', {
         var self = this,
             filters = this.options.filters;
 
-        this.find('thead').append(this.view('//frogui/components/tablefilter/views/core/tablefilter.ejs'));
+        this.find('thead').append(this.view('core/tablefilter.ejs'));
         var $cols = this.find('thead tr th'),
             $filterRow = this.find('.filter-row'),
             $submitRow = this.find('.filter-submit-row');
@@ -43,7 +43,7 @@ Frog.Controller.extend('Frogui.Controllers.Components.Tablefilter', {
                     case 'text':
                         $cell = $($filterRow.find('td').get(position));
                         $cell.attr('label', filter);
-                        $cell.frogui_components_tablefilter_field_text({
+                        $cell.components_tablefilter_field_text({
                             label: filter,
                             data: filters[filter].data,
                             placeholder: filters[filter].placeholder || 'Enter ' + filter
@@ -52,7 +52,7 @@ Frog.Controller.extend('Frogui.Controllers.Components.Tablefilter', {
                     case 'date':
                         $cell = $($filterRow.find('td').get(position));
                         $cell.attr('label', filter);
-                        $cell.frogui_components_tablefilter_field_date({
+                        $cell.components_tablefilter_field_date({
                             label: filter,
                             data: filters[filter].data,
                             placeholder: filters[filter].placeholder || 'Enter ' + filter
@@ -61,7 +61,7 @@ Frog.Controller.extend('Frogui.Controllers.Components.Tablefilter', {
                     case 'select':
                         $cell = $($filterRow.find('td').get(position));
                         $cell.attr('label', filter);
-                        $cell.frogui_components_tablefilter_field_select({
+                        $cell.components_tablefilter_field_select({
                             label: filter,
                             data: filters[filter].data
                         });
@@ -83,7 +83,7 @@ Frog.Controller.extend('Frogui.Controllers.Components.Tablefilter', {
         this.find('.filter-row, .filter-submit-row').toggleClass('hide');
     },
 
-    'button.filter-reset {click}': function(el, ev) {
+    'button.filter-reset click': function(el, ev) {
         var $filters = this.element.find('tr.filter-row').children();
 
         $filters.each(function(index, el) {
@@ -93,7 +93,7 @@ Frog.Controller.extend('Frogui.Controllers.Components.Tablefilter', {
         this.element.trigger('tablefilter.reset');
     },
 
-    'button.filter-submit {click}': function(el, ev) {
+    'button.filter-submit click': function(el, ev) {
         var $filters = this.element.find('tr.filter-row td'),
             filterData = {},
             filterVal;

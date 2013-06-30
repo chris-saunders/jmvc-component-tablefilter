@@ -9,7 +9,7 @@ Appends a row to an existing table to facilitate filtering table content. An eve
 ## Getting Started
 ### Quick-start
 ##### Controller
-    $('table').frogui_components_tablefilter({
+    $('table').components_tablefilter({
         filters: {
             name: {
                 type: "text",
@@ -30,8 +30,8 @@ Appends a row to an existing table to facilitate filtering table content. An eve
 
 ##### Filter button
 
-    'button.filter-show {click}': function(el, ev) {
-        this.find('.frogui_components_tablefilter').trigger('tablefilter.toggleVisibility');
+    'button.filter-show click': function(el, ev) {
+        this.find('.components_tablefilter').trigger('tablefilter.toggleVisibility');
     }
 
 #### Template
